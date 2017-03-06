@@ -17,7 +17,8 @@ tsenter <- function(series,year,month,value)
   
   if(startper[1]==year)
   {
-    periods <-startper[2]-month+1
+    
+    periods <-month - startper[2]+1
   }
   else if(startper[1]+1==year)
   {
@@ -27,12 +28,16 @@ tsenter <- function(series,year,month,value)
   {
     periods <- 12-startper[2]+1+month+(year-startper[1]-1)*12
   }
-  
-  if(endper[1]<year || (endper[1]==year && endper[2]<month))
+  if(periods>0)
   {
-    series <- window(series, start(series), c(year, month), extend=TRUE)
-  }
-    
+    if(endper[1]<year || (endper[1]==year && endper[2]<month))
+    {
+      series <- window(series, start(series), c(year, month), extend=TRUE)
+    }
+  print(periods)
+  print(value)
   series <- replace (series,periods,value)
-  
+  }else{
+    print("period före startperiod")
+  }  
 }
