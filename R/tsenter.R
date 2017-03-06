@@ -9,6 +9,7 @@
 #' temp <- c(1:14)
 #' Series1 <- ts(temp,start=c(2016,1),frequency = 12)
 #' Series1 <- tsenter(series=Series1,year=2017,month=3,value=47)
+#' @export
 
 tsenter <- function(series,year,month,value)
 {
