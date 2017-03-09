@@ -21,8 +21,8 @@ tsadd <- function(series1,series2)
   length2 <- tslength(series2)
   
   minlength=min(length1,length2)
+  maxlength=max(length1,length2)
   
-
   if(startper1[1]==startper2[1] && startper1[2]==startper2[2])
   {
     temp <- c(Series1[1]+Series2[1])
@@ -39,6 +39,19 @@ tsadd <- function(series1,series2)
       }
       temp <- c(Series1[a]+Series2[a])
       SeriesA <- tsenter(SeriesA,year,month,temp)
+    }
+    if(maxlength>minlength)
+    {
+      for(a in minlength+1:maxlength)
+      {
+        month <- month+1
+        if(month>12)
+        {
+          month <- 1
+          year <- year+1
+        }
+        SeriesA <- tsenter(SeriesA,year,month,"na")  
+      }
     }
   }
   SeriesA

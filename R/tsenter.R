@@ -35,8 +35,6 @@ tsenter <- function(series,year,month,value)
     {
       series <- window(series, start(series), c(year, month), extend=TRUE)
     }
-  print(periods)
-  print(value)
   series <- replace (series,periods,value)
   }else{
     print("period före startperiod")
