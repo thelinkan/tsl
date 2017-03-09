@@ -54,5 +54,97 @@ tsadd <- function(series1,series2)
       }
     }
   }
+  else if (startper1[1]==startper2[1] && startper1[2]>startper2[2] || (startper1[1]>startper2[1]))
+  {
+    pd <- tsperdiff(startper2,startper1)
+    temp <- c("na")
+    year <- startper2[1]
+    month <- startper2[2]
+    SeriesA <- ts(temp,start=c(startper2[1],startper2[2]),frequency=12)
+    if(pd>1)
+    {
+      for(a in 2:pd)
+      {
+        month <- month+1
+        if(month>12)
+        {
+          month <- 1
+          year <- year+1
+        }
+        temp <- c("na")
+        SeriesA <- tsenter(SeriesA,year,month,temp)
+      }
+    }
+    sp=min(tsperdiff(startper1,endper1),tsperdiff(startper1,endper2))+1
+    ep=min(tsperdiff(startper1,endper1),tsperdiff(startper1,endper2))+1
+    for(a in 1:sp)
+    {
+      month <- month+1
+      if(month>12)
+      {
+        month <- 1
+        year <- year+1
+      }
+      temp <- c(series1[a]+series2[a+pd])
+      SeriesA <- tsenter(SeriesA,year,month,temp)
+    }
+    for(a in sp+1:ep)
+    {
+      month <- month+1
+      if(month>12)
+      {
+        month <- 1
+        year <- year+1
+      }
+      temp <- c("na")
+      SeriesA <- tsenter(SeriesA,year,month,temp)
+    }
+  }
+  else
+  {
+    pd <- tsperdiff(startper1,startper2)
+    temp <- c("na")
+    year <- startper1[1]
+    month <- startper1[2]
+    SeriesA <- ts(temp,start=c(startper1[1],startper1[2]),frequency=12)
+    if(pd>1)
+    {
+      for(a in 2:pd)
+      {
+        month <- month+1
+        if(month>12)
+        {
+          month <- 1
+          year <- year+1
+        }
+        temp <- c("na")
+        SeriesA <- tsenter(SeriesA,year,month,temp)
+      }
+    }
+    sp=min(tsperdiff(startper2,endper2),tsperdiff(startper2,endper1))+1
+    ep=min(tsperdiff(startper2,endper2),tsperdiff(startper2,endper1))+1
+    for(a in 1:sp)
+    {
+      month <- month+1
+      if(month>12)
+      {
+        month <- 1
+        year <- year+1
+      }
+      temp <- c(series2[a]+series1[a+pd])
+      SeriesA <- tsenter(SeriesA,year,month,temp)
+    }
+    for(a in sp+1:ep)
+    {
+      month <- month+1
+      if(month>12)
+      {
+        month <- 1
+        year <- year+1
+      }
+      temp <- c("na")
+      SeriesA <- tsenter(SeriesA,year,month,temp)
+    }
+  }
   SeriesA
 }
