@@ -12,6 +12,10 @@
 
 tsadd <- function(series1,series2)
 {
+  if(is.ts(series1)==FALSE || is.ts(series2)==FALSE)
+  {
+    stop("series1 and series2 has to be ts objects.")
+  }
   startper1 <- start(series1)
   endper1 <- end(series1)
   length1 <- tslength(series1)

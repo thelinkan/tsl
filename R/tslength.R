@@ -6,6 +6,10 @@
 
 tslength <- function(series)
 {
+  if(is.ts(series)==FALSE)
+  {
+    stop("series has to be ts objects.")
+  }
   startper <- start(series)
   endper <- end(series)
   periods=(12-startper[2]+1)+(endper[1]-startper[1]-1)*12+endper[2]

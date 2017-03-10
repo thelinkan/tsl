@@ -13,6 +13,11 @@
 
 tsenter <- function(series,year,month,value)
 {
+  if(is.ts(series)==FALSE)
+  {
+    stop("series has to be ts objects.")
+  }
+
   startper <- start(series)
   endper <- end(series)
   
