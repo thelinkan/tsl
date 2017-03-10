@@ -1,6 +1,6 @@
 Package: tsl
 Title: Time series functions
-Version: 1.0
+Version: 0.1
 Date: 2017-03-04
 Author: Torbjorn Lindquist
 Maintainer: Torbjorn Lindquist <Torbjorn.Lindquist@gmail.com>

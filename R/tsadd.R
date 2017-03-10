@@ -16,7 +16,7 @@ tsadd <- function(series1,series2)
   {
     stop("series1 and series2 has to be ts objects.")
   }
-  if(frequency(series1!=12 || series2!=12)
+  if(frequency(series1)!=12 || frequency(series2)!=12)
   {
     stop("tsadd only supports monthly data right now")
   }

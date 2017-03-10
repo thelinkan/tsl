@@ -10,7 +10,7 @@ tslength <- function(series)
   {
     stop("series has to be ts objects.")
   }
-  if(frequency(series!=12)
+  if(frequency(series)!=12)
   {
     stop("tsenter only supports monthly data right now")
   }

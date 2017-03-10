@@ -17,7 +17,7 @@ tsenter <- function(series,year,month,value)
   {
     stop("series has to be ts objects.")
   }
-  if(frequency(series!=12)
+  if(frequency(series)!=12)
   {
     stop("tsenter only supports monthly data right now")
   }
@@ -25,19 +25,9 @@ tsenter <- function(series,year,month,value)
   startper <- start(series)
   endper <- end(series)
   
-  if(startper[1]==year)
-  {
-    
-    periods <-month - startper[2]+1
-  }
-  else if(startper[1]+1==year)
-  {
-    periods <- 12-startper[2]+1+month
-  }
-  else
-  {
-    periods <- 12-startper[2]+1+month+(year-startper[1]-1)*12
-  }
+  time <- c(year,month)
+  periods <- tsperdiff(startper,time)+1
+
   if(periods>0)
   {
     if(endper[1]<year || (endper[1]==year && endper[2]<month))
