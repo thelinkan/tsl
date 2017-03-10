@@ -16,6 +16,10 @@ tsadd <- function(series1,series2)
   {
     stop("series1 and series2 has to be ts objects.")
   }
+  if(frequency(series1!=12 || series2!=12)
+  {
+    stop("tsadd only supports monthly data right now")
+  }
   startper1 <- start(series1)
   endper1 <- end(series1)
   length1 <- tslength(series1)
@@ -26,7 +30,7 @@ tsadd <- function(series1,series2)
   
   minlength=min(length1,length2)
   maxlength=max(length1,length2)
-  
+
   if(startper1[1]==startper2[1] && startper1[2]==startper2[2])
   {
     temp <- c(Series1[1]+Series2[1])

@@ -17,6 +17,10 @@ tsenter <- function(series,year,month,value)
   {
     stop("series has to be ts objects.")
   }
+  if(frequency(series!=12)
+  {
+    stop("tsenter only supports monthly data right now")
+  }
 
   startper <- start(series)
   endper <- end(series)
