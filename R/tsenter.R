@@ -8,10 +8,10 @@
 #' @examples
 #' temp <- c(1:14)
 #' Series1 <- ts(temp,start=c(2016,1),frequency = 12)
-#' Series1 <- tsenter(series=Series1,year=2017,month=3,value=47)
+#' Series1 <- tsenter(series=Series1,year=2017,period=3,value=47)
 #' @export
 
-tsenter <- function(series,year,month,value)
+tsenter <- function(series,year,period,value)
 {
   if(is.ts(series)==FALSE)
   {
@@ -21,7 +21,7 @@ tsenter <- function(series,year,month,value)
   {
     stop("tsenter only supports monthly and quarterly data right now")
   }
-  if(month>frequency(series) || month<1)
+  if(period>frequency(series) || period<1)
   {
     stop("period has to be between 1 and 12 for monthly data, and between 1 and 4 for quarterly data")
   }
@@ -31,13 +31,13 @@ tsenter <- function(series,year,month,value)
 
   if(frequency(series)==12)
   {
-    time <- c(year,month)
+    time <- c(year,period)
     periods <- tsperdiff(startper,time,"m")+1
     if(periods>0)
     {
-      if(endper[1]<year || (endper[1]==year && endper[2]<month))
+      if(endper[1]<year || (endper[1]==year && endper[2]<period))
       {
-        series <- window(series, start(series), c(year, month), extend=TRUE)
+        series <- window(series, start(series), c(year, period), extend=TRUE)
       }
     series <- replace (series,periods,value)
     }else{
@@ -46,15 +46,15 @@ tsenter <- function(series,year,month,value)
   }
   else if(frequency(series)==4)
   {
-    time <- c(year,month)
+    time <- c(year,period)
     periods <- tsperdiff(startper,time,"q")+1
     if(periods>0)
     {
-      if(endper[1]<year || (endper[1]==year && endper[2]<month))
+      if(endper[1]<year || (endper[1]==year && endper[2]<period))
       {
-        series <- window(series, start(series), c(year, month), extend=TRUE)
+        series <- window(series, start(series), c(year, period), extend=TRUE)
       }
-    series <- replace (series,periods,value)
+      series <- replace (series,periods,value)
     }else{
       print("period före startperiod")
     }

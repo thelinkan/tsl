@@ -16,6 +16,6 @@ tslength <- function(series)
   }
   startper <- start(series)
   endper <- end(series)
-  freq <- frequency(series)
-  periods=(freq-startper[2]+1)+(endper[1]-startper[1]-1)*freq+endper[2]
+  freqp <- frequency(series)
+  periods=(freqp-startper[2]+1)+(endper[1]-startper[1]-1)*freqp+endper[2]
 }
