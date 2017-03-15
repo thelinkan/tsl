@@ -64,7 +64,7 @@ tsadd <- function(series1,series2)
   }
   else if (startper1[1]==startper2[1] && startper1[2]>startper2[2] || (startper1[1]>startper2[1]))
   {
-    pd <- tsperdiff(startper2,startper1)
+    pd <- tsperdiff(startper2,startper1,"m")
     temp <- c("na")
     year <- startper2[1]
     month <- startper2[2]
@@ -83,8 +83,8 @@ tsadd <- function(series1,series2)
         SeriesA <- tsenter(SeriesA,year,month,temp)
       }
     }
-    sp=min(tsperdiff(startper1,endper1),tsperdiff(startper1,endper2))+1
-    ep=min(tsperdiff(startper1,endper1),tsperdiff(startper1,endper2))+1
+    sp=min(tsperdiff(startper1,endper1,"m"),tsperdiff(startper1,endper2,"m"))+1
+    ep=min(tsperdiff(startper1,endper1,"m"),tsperdiff(startper1,endper2,"m"))+1
     for(a in 1:sp)
     {
       month <- month+1
@@ -110,7 +110,7 @@ tsadd <- function(series1,series2)
   }
   else
   {
-    pd <- tsperdiff(startper1,startper2)
+    pd <- tsperdiff(startper1,startper2,"m")
     temp <- c("na")
     year <- startper1[1]
     month <- startper1[2]
@@ -129,8 +129,8 @@ tsadd <- function(series1,series2)
         SeriesA <- tsenter(SeriesA,year,month,temp)
       }
     }
-    sp=min(tsperdiff(startper2,endper2),tsperdiff(startper2,endper1))+1
-    ep=min(tsperdiff(startper2,endper2),tsperdiff(startper2,endper1))+1
+    sp=min(tsperdiff(startper2,endper2,"m"),tsperdiff(startper2,endper1,"m"))+1
+    ep=min(tsperdiff(startper2,endper2,"m"),tsperdiff(startper2,endper1,"m"))+1
     for(a in 1:sp)
     {
       month <- month+1

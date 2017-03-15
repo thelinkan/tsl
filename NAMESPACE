@@ -3,3 +3,5 @@
 export(tsadd)
 export(tsenter)
 export(tslength)
+export(tspchya)
+export(tsperdiff)

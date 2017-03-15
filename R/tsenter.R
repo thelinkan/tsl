@@ -17,25 +17,47 @@ tsenter <- function(series,year,month,value)
   {
     stop("series has to be ts objects.")
   }
-  if(frequency(series)!=12)
+  if(frequency(series)!=12 && frequency(series)!=4)
   {
     stop("tsenter only supports monthly data right now")
+  }
+  if(month>frequency(series) || month<1)
+  {
+    stop("period has to be between 1 and 12 for monthly data")
   }
 
   startper <- start(series)
   endper <- end(series)
-  
-  time <- c(year,month)
-  periods <- tsperdiff(startper,time)+1
 
-  if(periods>0)
+  if(frequency(series)==12)
   {
-    if(endper[1]<year || (endper[1]==year && endper[2]<month))
+    time <- c(year,month)
+    periods <- tsperdiff(startper,time,"m")+1
+    if(periods>0)
     {
-      series <- window(series, start(series), c(year, month), extend=TRUE)
+      if(endper[1]<year || (endper[1]==year && endper[2]<month))
+      {
+        series <- window(series, start(series), c(year, month), extend=TRUE)
+      }
+    series <- replace (series,periods,value)
+    }else{
+      print("period före startperiod")
     }
-  series <- replace (series,periods,value)
-  }else{
-    print("period före startperiod")
-  }  
+  }
+  else if(frequency(series)==4)
+  {
+    time <- c(year,month)
+    periods <- tsperdiff(startper,time,"q")+1
+    if(periods>0)
+    {
+      if(endper[1]<year || (endper[1]==year && endper[2]<month))
+      {
+        series <- window(series, start(series), c(year, month), extend=TRUE)
+      }
+    series <- replace (series,periods,value)
+    }else{
+      print("period före startperiod")
+    }
+  }
+  series
 }
