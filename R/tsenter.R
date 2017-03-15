@@ -19,11 +19,11 @@ tsenter <- function(series,year,month,value)
   }
   if(frequency(series)!=12 && frequency(series)!=4)
   {
-    stop("tsenter only supports monthly data right now")
+    stop("tsenter only supports monthly and quarterly data right now")
   }
   if(month>frequency(series) || month<1)
   {
-    stop("period has to be between 1 and 12 for monthly data")
+    stop("period has to be between 1 and 12 for monthly data, and between 1 and 4 for quarterly data")
   }
 
   startper <- start(series)

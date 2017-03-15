@@ -10,11 +10,12 @@ tslength <- function(series)
   {
     stop("series has to be ts objects.")
   }
-  if(frequency(series)!=12)
+  if(frequency(series)!=12 && frequency(series)!=4)
   {
-    stop("tsenter only supports monthly data right now")
+    stop("tslength only supports monthly and quarterly data right now")
   }
   startper <- start(series)
   endper <- end(series)
-  periods=(12-startper[2]+1)+(endper[1]-startper[1]-1)*12+endper[2]
+  freq <- frequency(series)
+  periods=(freq-startper[2]+1)+(endper[1]-startper[1]-1)*freq+endper[2]
 }

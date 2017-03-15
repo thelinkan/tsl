@@ -16,14 +16,23 @@ tsadd <- function(series1,series2)
   {
     stop("series1 and series2 has to be ts objects.")
   }
-  if(frequency(series1)!=12 || frequency(series2)!=12)
+  if(!((frequency(series1)==12 && frequency(series2)==12) || (frequency(series1)==4 && frequency(series2)==4)))
   {
-    stop("tsadd only supports monthly data right now")
+    stop("tsadd only supports monthly and quarterly data right now")
+  }
+  if(frequency(series1)!=frequency(series2))
+  {
+    stop("both series1 and series2 has to be the same frequency")
   }
   startper1 <- start(series1)
   endper1 <- end(series1)
   length1 <- tslength(series1)
-  
+  freqp <- frequency(series1)  
+  if(freqp==4)
+    freq="q"
+  else
+    freq="m"
+
   startper2 <- start(series2)
   endper2 <- end(series2)
   length2 <- tslength(series2)
@@ -36,11 +45,11 @@ tsadd <- function(series1,series2)
     temp <- c(Series1[1]+Series2[1])
     year <- startper1[1]
     month <- startper1[2]
-    SeriesA <- ts(temp,start=c(startper1[1],startper1[2]),frequency=12)
+    SeriesA <- ts(temp,start=c(startper1[1],startper1[2]),frequency=freq)
     for(a in 2:minlength)
     {
       month <- month+1
-      if(month>12)
+      if(month>freq)
       {
         month <- 1
         year <- year+1
@@ -53,7 +62,7 @@ tsadd <- function(series1,series2)
       for(a in minlength+1:maxlength)
       {
         month <- month+1
-        if(month>12)
+        if(month>freq)
         {
           month <- 1
           year <- year+1
@@ -64,7 +73,7 @@ tsadd <- function(series1,series2)
   }
   else if (startper1[1]==startper2[1] && startper1[2]>startper2[2] || (startper1[1]>startper2[1]))
   {
-    pd <- tsperdiff(startper2,startper1,"m")
+    pd <- tsperdiff(startper2,startper1,freq)
     temp <- c("na")
     year <- startper2[1]
     month <- startper2[2]
@@ -83,8 +92,8 @@ tsadd <- function(series1,series2)
         SeriesA <- tsenter(SeriesA,year,month,temp)
       }
     }
-    sp=min(tsperdiff(startper1,endper1,"m"),tsperdiff(startper1,endper2,"m"))+1
-    ep=min(tsperdiff(startper1,endper1,"m"),tsperdiff(startper1,endper2,"m"))+1
+    sp=min(tsperdiff(startper1,endper1,freq),tsperdiff(startper1,endper2,freq))+1
+    ep=min(tsperdiff(startper1,endper1,freq),tsperdiff(startper1,endper2,freq))+1
     for(a in 1:sp)
     {
       month <- month+1
@@ -110,7 +119,7 @@ tsadd <- function(series1,series2)
   }
   else
   {
-    pd <- tsperdiff(startper1,startper2,"m")
+    pd <- tsperdiff(startper1,startper2,freq)
     temp <- c("na")
     year <- startper1[1]
     month <- startper1[2]
@@ -129,8 +138,8 @@ tsadd <- function(series1,series2)
         SeriesA <- tsenter(SeriesA,year,month,temp)
       }
     }
-    sp=min(tsperdiff(startper2,endper2,"m"),tsperdiff(startper2,endper1,"m"))+1
-    ep=min(tsperdiff(startper2,endper2,"m"),tsperdiff(startper2,endper1,"m"))+1
+    sp=min(tsperdiff(startper2,endper2,freq),tsperdiff(startper2,endper1,freq))+1
+    ep=min(tsperdiff(startper2,endper2,freq),tsperdiff(startper2,endper1,freq))+1
     for(a in 1:sp)
     {
       month <- month+1
