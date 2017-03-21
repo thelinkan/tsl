@@ -19,7 +19,7 @@ tscollapse <-function (series,ptyp,method)
   startper <- start(series)
   endper <- end(series)
   
-  if(method=="Total" || method=="Average")
+  if(method=="Total" || method=="Average" || method=="Minimum" || method=="Maximum")
   {
     if(startper[2]%%3==2)
     {
@@ -47,9 +47,7 @@ tscollapse <-function (series,ptyp,method)
       endper[2]=endper[2]+12
       endper[1]=endper[1]-1
     }
-    print(series)
     series <- window(series, startper, endper, extend=TRUE)
-    print(series)
     if(method=="Total")
     {
       newseries <-  aggregate(series, nfrequency=4)
@@ -57,6 +55,32 @@ tscollapse <-function (series,ptyp,method)
     if(method=="Average")
     {
       newseries <-  aggregate(series, nfrequency=4,mean)
+    }
+    if(method=="Minimum" || method=="Maximum")
+    {
+      if(method=="Minimum")
+        temp <- min(series[1],series[2],series[3])
+      else 
+        temp <- max(series[1],series[2],series[3])
+      year <- startper[1]
+      period <- (startper[2]+2)/3
+      pd <- (tsperdiff(startper,endper,"m")-2)/3
+      newseries <- ts(temp,start = c(year,period),frequency = 4)
+      for(a in 1:pd)
+      {
+        period <- period+1
+        if(period>4)
+        {
+          period <- 1
+          year <- year+1
+        }
+        if(method=="Minimum")
+          temp <- min(series[a*3+1],series[a*3+2],series[a*3+3])
+        else
+          temp <- max(series[1],series[2],series[3])
+        newseries <- tsenter(newseries,year,period,temp)
+        
+      }
     }
   }
   else
