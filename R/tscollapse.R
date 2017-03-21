@@ -77,7 +77,7 @@ tscollapse <-function (series,ptyp,method)
         if(method=="Minimum")
           temp <- min(series[a*3+1],series[a*3+2],series[a*3+3])
         else
-          temp <- max(series[1],series[2],series[3])
+          temp <- max(series[a*3+1],series[a*3+2],series[a*3+3])
         newseries <- tsenter(newseries,year,period,temp)
         
       }
