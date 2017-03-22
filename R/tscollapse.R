@@ -19,7 +19,7 @@ tscollapse <-function (series,ptyp,method)
   startper <- start(series)
   endper <- end(series)
   
-  if(method=="Total" || method=="Average" || method=="Minimum" || method=="Maximum")
+  if(method=="Total" || method=="Average" || method=="Minimum" || method=="Maximum" || method=="First" || method=="Last")
   {
     if(startper[2]%%3==2)
     {
@@ -56,12 +56,16 @@ tscollapse <-function (series,ptyp,method)
     {
       newseries <-  aggregate(series, nfrequency=4,mean)
     }
-    if(method=="Minimum" || method=="Maximum")
+    if(method=="Minimum" || method=="Maximum" || method=="First" || method=="Last")
     {
       if(method=="Minimum")
         temp <- min(series[1],series[2],series[3])
-      else 
+      if(method=="Maximum")
         temp <- max(series[1],series[2],series[3])
+      if(method=="First")
+        temp <- series[1]
+      if(method=="Last")
+        temp <- series[3]
       year <- startper[1]
       period <- (startper[2]+2)/3
       pd <- (tsperdiff(startper,endper,"m")-2)/3
@@ -76,10 +80,13 @@ tscollapse <-function (series,ptyp,method)
         }
         if(method=="Minimum")
           temp <- min(series[a*3+1],series[a*3+2],series[a*3+3])
-        else
+        if(method=="Maximum")
           temp <- max(series[a*3+1],series[a*3+2],series[a*3+3])
+        if(method=="First")
+          temp <- series[a*3+1]
+        if(method=="Last")
+          temp <- series[a*3+3]
         newseries <- tsenter(newseries,year,period,temp)
-        
       }
     }
   }

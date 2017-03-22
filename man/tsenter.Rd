@@ -4,16 +4,16 @@
 \alias{tsenter}
 \title{Inserts a number to a series}
 \usage{
-tsenter(series, year, month, value)
+tsenter(series, year, period, value)
 }
 \arguments{
 \item{series}{A ts object}
 
 \item{year}{The year for the observation}
 
-\item{month}{The month of the observation}
-
 \item{value}{The value to insert on year month in the ts object}
+
+\item{month}{The month of the observation}
 }
 \value{
 The new ts object.
@@ -24,5 +24,5 @@ Inserts a number to a series
 \examples{
 temp <- c(1:14)
 Series1 <- ts(temp,start=c(2016,1),frequency = 12)
-Series1 <- tsenter(series=Series1,year=2017,month=3,value=47)
+Series1 <- tsenter(series=Series1,year=2017,period=3,value=47)
 }
