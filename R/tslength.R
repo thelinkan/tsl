@@ -10,9 +10,9 @@ tslength <- function(series)
   {
     stop("series has to be ts objects.")
   }
-  if(frequency(series)!=12 && frequency(series)!=4)
+  if(frequency(series)!=12 && frequency(series)!=4 && frequency(series)!=2 && frequency(series)!=1)
   {
-    stop("tslength only supports monthly and quarterly data right now")
+    stop("tslength only supports monthly, quarterly, semi annual and annual data right now")
   }
   startper <- start(series)
   endper <- end(series)
